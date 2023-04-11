@@ -1,10 +1,4 @@
-# js_hawli_print
-Js ile yazılmış daha havalı duran bir print kodu
+# Js_Tutor
+Js tutor by $erhat/18
 
-normal olarak bildiğiniz gibi js dilinde print console.log("SERHAT") tarzında oluyor
-
-ama siz neden sade olasınız ki :D
-
-bu yüzden console.log kullanımınızı bu şekilde yaparak daha farklı olabilirsiniz :D
-
-dosyada verdim daha da açıklamaya gerek yok bence şimdiden iyi kullanımlar.
+Bu projede js temel olarak kullanacağnız 3 5 olayı açıklamak istedim iyi kullanımlar dilerim
