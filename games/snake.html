@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Js Snake By $erhat/18</title>
+    <style>
+        body {
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        canvas {
+            border: 1px solid #fff;
+        }
+
+        #skor {
+            color: #fff;
+            font-size: 24px;
+            margin-top: 16px;
+        }
+
+        #yenidenDene {
+            margin-top: 16px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="oyunCanvas" width="400" height="400"></canvas>
+    <div id="skor">Skor: 0</div>
+    <button id="yenidenDene" onclick="yenidenDene()">Yeniden Dene</button>
+
+    <script>
+        const canvas = document.getElementById("oyunCanvas");
+        const ctx = canvas.getContext("2d");
+
+        const yilanBoyutu = 20;
+        let yilan = [{ x: 200, y: 200 }];
+        let yem = { x: Math.floor(Math.random() * 20) * yilanBoyutu, y: Math.floor(Math.random() * 20) * yilanBoyutu };
+        let hareketX = 0;
+        let hareketY = 0;
+        let skor = 0;
+
+        function oyunuBaslat() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            yilan.unshift({ x: yilan[0].x + hareketX, y: yilan[0].y + hareketY });
+            if (yilan[0].x === yem.x && yilan[0].y === yem.y) {
+                yem = { x: Math.floor(Math.random() * 20) * yilanBoyutu, y: Math.floor(Math.random() * 20) * yilanBoyutu };
+                skor += 10;
+                document.getElementById("skor").innerText = "Skor: " + skor;
+            } else {
+                yilan.pop();
+            }
+            yilan.forEach(cizYilan);
+            ctx.fillStyle = "red";
+            ctx.fillRect(yem.x, yem.y, yilanBoyutu, yilanBoyutu);
+
+            if (yilan[0].x < 0 || yilan[0].x >= canvas.width || yilan[0].y < 0 || yilan[0].y >= canvas.height || carpismaKontrol()) {
+                clearInterval(oyunDongusu);
+                document.getElementById("yenidenDene").style.display = "block";
+            }
+        }
+
+        function cizYilan(parca) {
+            ctx.fillStyle = "lime";
+            ctx.fillRect(parca.x, parca.y, yilanBoyutu, yilanBoyutu);
+            ctx.strokeStyle = "black";
+            ctx.strokeRect(parca.x, parca.y, yilanBoyutu, yilanBoyutu);
+        }
+
+        function klavyeKontrol(event) {
+            switch (event.keyCode) {
+                case 37:
+                    if (hareketX !== yilanBoyutu) {
+                        hareketX = -yilanBoyutu;
+                        hareketY = 0;
+                    }
+                    break;
+                case 38:
+                    if(hareketY !== yilanBoyutu) {
+hareketX = 0;
+hareketY = -yilanBoyutu;
+}
+break;
+case 39:
+if (hareketX !== -yilanBoyutu) {
+hareketX = yilanBoyutu;
+hareketY = 0;
+}
+break;
+case 40:
+if (hareketY !== -yilanBoyutu) {
+hareketX = 0;
+hareketY = yilanBoyutu;
+}
+break;
+}
+}
+function carpismaKontrol() {
+        for (let i = 1; i < yilan.length; i++) {
+            if (yilan[i].x === yilan[0].x && yilan[i].y === yilan[0].y) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function yenidenDene() {
+        yilan = [{ x: 200, y: 200 }];
+        yem = { x: Math.floor(Math.random() * 20) * yilanBoyutu, y: Math.floor(Math.random() * 20) * yilanBoyutu };
+        hareketX = 0;
+        hareketY = 0;
+        skor = 0;
+        document.getElementById("skor").innerText = "Skor: " + skor;
+        document.getElementById("yenidenDene").style.display = "none";
+        
+        oyunDongusu = setInterval(oyunuBaslat, 150);
+    }
+
+    let oyunDongusu = setInterval(oyunuBaslat, 150);
+    document.addEventListener("keydown", klavyeKontrol);
+</script>
+
+
+</body>
+</html>
